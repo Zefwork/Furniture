@@ -1,0 +1,80 @@
+<div class="row wrapper">
+  <div class="col s12">
+    <div class="page-subtitle">
+      <h4>Позиции:</h4>
+      <button class="waves-effect waves-light btn green darken-1 btn-small" (click)="onAddPosition()">
+        Добавить позицию
+      </button>
+    </div>
+
+    <div *ngIf="!loading; else loader">
+      <div class="collection" *ngIf="positions.length !== 0; else empty">
+        <owl-carousel-o [options]="customOptions">
+          <ng-container *ngFor="let position of positions" class="card waves-effect pointer" (click)="onSelectPosition(position)">
+            <ng-template carouselSlide id="position.id" class="card-content center p10">
+              <h5 class="m0">
+                <span>
+                  {{position.name}} <strong>{{position.cost}} грн.</strong>
+                </span>
+              </h5>
+              <img [src]="'../../../assets/3.jpg'">
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+      <ng-template #empty>
+        <div class="center">В категории позиций нет</div>
+      </ng-template>
+      <ng-template #loader>
+        <app-loader></app-loader>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="modal" #modal>
+      <div class="modal-content">
+        <h4 class="mb1">Добавить позицию</h4>
+        <div class="input-field">
+          <input formControlName="name" id="pos-name" type="text"
+            [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}">
+          <label for="pos-name">Название</label>
+          <span *ngIf="form.get('name').invalid && form.get('name').touched" class="helper-text red-text">
+            Название не должно быть пустым.
+          </span>
+        </div>
+        <div class="input-field">
+          <input id="pos-cost" type="number" min="1" formControlName="cost"
+            [ngClass]="{'invalid': form.get('cost').invalid && form.get('cost').touched}">
+          <label for="pos-cost">Цена</label>
+          <span *ngIf="form.get('cost').invalid && form.get('cost').touched" class="helper-text red-text">
+            Введите корректную цену. Минимальное значение 1.
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="onCancel()" class="modal-action waves-effect waves-black btn-flat"
+          [disabled]="form.disabled">
+          Отмена
+        </button>
+        <button class="modal-action btn waves-effect" type="submit" [disabled]="form.invalid || form.disabled">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+  <!-- <owl-carousel-o [options]="customOptions">
+          <div *ngFor="let position of positions" class="card waves-effect pointer" (click)="onSelectPosition(position)">
+            <ng-template carouselSlide id="position.id" class="card-content center p10">
+              <h5 class="m0">
+                <span>
+                  {{position.name}} <strong>{{position.cost}} грн.</strong>
+                </span>
+              </h5>
+              <img [src]="'../../../assets/3.jpg'" class="responsive-img order-img">
+            </ng-template>
+          </div>
+        </owl-carousel-o> -->

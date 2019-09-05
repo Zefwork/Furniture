@@ -1,0 +1,17 @@
+<nav>
+  <div class="nav-wrapper brown light-1">
+    <a routerLink="/" class="brand-logo">Furniture</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li routerLinkActive="active">
+        <a routerLink="/categories">Каталог</a>
+      </li>
+      <li routerLinkActive="active">
+        <a (click)="logout($event)">Выйти</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="auth-block">
+  <router-outlet></router-outlet>
+</main>
